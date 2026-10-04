@@ -111,3 +111,47 @@ AI ถาม: ยอดมัดจำบนหน้าจอเอาจาก
 cd backend && pytest -v -k "AC_" 2>&1 | tee ../specs/002-booking/test-run.txt  ผล 15 passed, 1 skipped
 cd frontend && npm test  ผล 1 passed
 กรอก ac-results.md รอบที่ 2 และสรุป gaps.md 10 แถว
+
+## #35 | 4 ต.ค. 2569 | ทีมตอบคำถาม Q5 ใน /clarify
+
+AI ถาม: ถ้า IF-02 ส่งข้อความให้ลูกค้า/ช่างไม่สำเร็จหรือช้าเกิน 60 วินาที ระบบควรส่งซ้ำหรือถือว่าการสร้างงานล้ม?
+ทีมตอบ: ส่งซ้ำได้สูงสุด 5 ครั้ง แล้วคงสถานะงานไว้จนกว่าจะสำเร็จหรือยกเลิก
+แก้ใน spec.md: REQ-FN-012 เพิ่มเงื่อนไขส่งซ้ำสูงสุด 5 ครั้ง และเพิ่ม ASM-05 ใน Assumptions
+
+## #36 | 4 ต.ค. 2569 | Copilot Chat (Agent) | /plan specs/002-booking/spec.md
+
+AI สร้าง plan.md ใหม่ตาม structure ของ prompt /plan จาก spec.md v1.2
+ผล: อัปเดตการวางแผนระบบจองงานเป็นโครงงานที่ใช้ FastAPI + SQLAlchemy + PostgreSQL (ทีมเลือกเอง), React + Vite สำหรับ UI, และแนบข้อ Open Questions ทั้งหมดในส่วน 8 ให้ทีมตรวจก่อนเริ่ม implement
+
+## #37 | 4 ต.ค. 2569 | Copilot Chat (Agent) | /tasks specs/002-booking/spec.md
+
+AI แตก plan.md เป็น tasks.md ใหม่ตาม prompt /tasks โดยใช้ spec.md v1.2 และ plan.md v1.2
+ผล: สร้าง 11 task รวม 2 task ที่รอ Q-xx (T-05 รอ Q-19, T-06 รอ Q-14) และมีตารางตรวจความครบจบครบทุก AC และ Constraint ใน spec
+
+## #38 | 4 ต.ค. 2569 | Copilot Chat (Agent) | /implement T-01 specs/002-booking/tasks.md
+
+AI ทำงานตาม T-01 เท่านั้น: ตั้งโครงโปรเจกต์และพื้นฐาน test สำหรับ backend + frontend
+ไฟล์ที่แตะ: backend/requirements.txt, backend/pytest.ini, backend/app/config.py, backend/app/main.py, backend/app/db/session.py, backend/app/db/models.py, backend/app/db/migrations/m001_init.py, frontend/package.json, frontend/vite.config.js, frontend/src/setupTests.js
+ผล test:
+- `cd backend && pytest -q` → 15 passed, 1 skipped in 0.97s
+- `cd frontend && npm test -- --run` → 1 passed in 2.32s
+สิ่งที่เกือบต้องเดา: ไม่มี เพราะโครงโปรเจกต์และสคริปต์ test ถูกใช้ตาม plan.md เดิมอยู่แล้ว และ task นี้มีวัตถุประสงค์เป็นพื้นฐานเท่านั้น
+สถานะ T-01: เสร็จ รอทีมตรวจ
+
+## #39 | 4 ต.ค. 2569 | Copilot Chat (Agent) | /implement T-10 specs/002-booking/tasks.md
+
+AI ทำงานตาม T-10 เท่านั้น: สร้าง/ยืนยันหน้า UI สำหรับเลือกช่างและยืนยันการจอง
+ไฟล์ที่แตะ: frontend/src/App.jsx, frontend/src/api/client.js, frontend/src/pages/TechnicianPicker.jsx, frontend/src/pages/ConfirmBooking.jsx, frontend/src/pages/BookingResult.jsx, frontend/src/__tests__/AC-07-04.test.jsx
+ผล test:
+- `cd frontend && npm test -- --run src/__tests__/AC-07-04.test.jsx` → 1 passed in 1.87s
+สิ่งที่เกือบต้องเดา: ไม่มี เพราะการออกแบบแล้วชัดเจนจาก AC-07-04 และ plan.md; UI ใช้สัญญา API ตามที่กำหนดไว้
+สถานะ T-10: เสร็จ รอทีมตรวจ
+
+## #40 | 4 ต.ค. 2569 | Copilot Chat (Agent) | /implement T-02 specs/002-booking/tasks.md
+
+AI ตรวจ 3 อย่างก่อนเริ่ม: T-02 มีสถานะ "พร้อมทำ", ปราศจาก Q-xx ที่ปิดกั้น, และ task มีช่อง "ต้องทำหลัง" และ "ไฟล์ที่แตะ" ครบถ้วน
+ไฟล์ที่แตะ: backend/app/db/models.py, backend/app/db/migrations/m001_init.py, backend/tests/conftest.py
+ผล test:
+- `cd backend && pytest -q` → 15 passed, 1 skipped in 1.05s
+สิ่งที่เกือบต้องเดา: ไม่มี เพราะ schema และ model ของ jobs / time_slots / payments / refunds ถูกกำหนดชัดเจนใน spec.md และ plan.md; ไฟล์ที่เกี่ยวข้องมีการสร้างตารางครบตาม MD-STM-01 และ REQUIRE-PRV-002
+สถานะ T-02: เสร็จ รอทีมตรวจ
