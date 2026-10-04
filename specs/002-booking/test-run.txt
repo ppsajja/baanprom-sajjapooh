@@ -1,0 +1,32 @@
+# ผลรันจริง 4 ต.ค. 2569 (รอบที่ 2) | หลังบ้าน: cd backend && pytest -v -k "AC_" | หน้าจอ: cd frontend && npm test
+
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspaces/baanprom-swreqspec/backend
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.13.0
+collecting ... collected 16 items
+
+tests/test_booking.py::test_AC_07_01_booking_success PASSED              [  6%]
+tests/test_booking.py::test_AC_07_02_slot_not_rebookable PASSED          [ 12%]
+tests/test_booking.py::test_AC_07_03_notify_both_within_60s PASSED       [ 18%]
+tests/test_booking.py::test_AC_07_04_no_charge_when_slot_taken PASSED    [ 25%]
+tests/test_load_scaled.py::test_AC_07_08_search_under_load_scaled PASSED [ 31%]
+tests/test_payment.py::test_AC_07_05_payment_timeout PASSED              [ 37%]
+tests/test_payment.py::test_AC_07_06_payment_declined PASSED             [ 43%]
+tests/test_payment.py::test_AC_07_07_inquiry_approved_no_double_charge PASSED [ 50%]
+tests/test_privacy.py::test_AC_07_09_phone_hidden_until_2h PASSED        [ 56%]
+tests/test_refund.py::test_AC_07_10_refund[R1-confirmed-48-customer-cancelled-350] PASSED [ 62%]
+tests/test_refund.py::test_AC_07_10_refund[R2-confirmed-5-customer-cancelled-180] PASSED [ 68%]
+tests/test_refund.py::test_AC_07_10_refund[R4-rematching-20-system-cancelled-350] PASSED [ 75%]
+tests/test_refund.py::test_AC_07_10_refund[R5-pending_payment-30-system-auto_cancelled-0] PASSED [ 81%]
+tests/test_refund.py::test_AC_07_10_refund_R6_not_allowed PASSED         [ 87%]
+tests/test_refund.py::test_AC_07_10_refund_R3 SKIPPED (รอ Q-14 (BR-0...) [ 93%]
+tests/test_refund.py::test_AC_07_10_refund_R3_temporary_behaviour PASSED [100%]
+
+======================== 15 passed, 1 skipped in 0.58s =========================
+ PASS src/__tests__/AC-07-04.test.jsx (1 test) 148ms
+ Test Files  1 passed (1)
+      Tests  1 passed (1)

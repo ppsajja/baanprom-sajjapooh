@@ -1,0 +1,26 @@
+{
+  "name": "baanprom-swreqspec",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-python.python"
+      ],
+      "settings": {
+        "chat.promptFiles": true
+      }
+    }
+  },
+  "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend --no-audit --no-fund",
+  "forwardPorts": [
+    5173
+  ],
+  "portsAttributes": {
+    "5173": {
+      "label": "หน้าจอ (Vite)",
+      "onAutoForward": "notify"
+    }
+  }
+}
